@@ -1,0 +1,4 @@
+myenv
+venv
+.vscode
+secure_key.py

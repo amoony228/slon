@@ -1,7 +1,5 @@
 from openai import AsyncOpenAI
 
-from openai import PermissionDeniedError
-
 from secure_key import KEY
 
 
@@ -13,11 +11,7 @@ class LLModel(AsyncOpenAI):
         super().__init__(api_key=key)
 
     async def get_ai_answer(self, prompt:str) -> str:
-        answer = await self.responses.create(
-                        model=self.__MODEL,
-                        input=f'''{prompt}''',
-                        max_output_tokens=self.__MAX_OUTPUT_TOKENS)
-            
+        answer = await self.responses.create(model=self.__MODEL, input=f'''{prompt}''', max_output_tokens=self.__MAX_OUTPUT_TOKENS)
         return answer.output_text
     
 llm_client = LLModel(key=KEY)

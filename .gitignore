@@ -2,3 +2,4 @@ myenv
 venv
 .vscode
 secure_key.py
+__pycache__

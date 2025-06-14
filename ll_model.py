@@ -3,21 +3,21 @@ from openai import AsyncOpenAI
 from openai import PermissionDeniedError
 
 from secure_key import KEY
-from config import MODEL, MAX_OUTPUT_TOKENS
 
 
-class my_request_model(AsyncOpenAI):
+class LLModel(AsyncOpenAI):
+    __MODEL = "gpt-4o-mini-2024-07-18"
+    __MAX_OUTPUT_TOKENS = 100
+
+    def __init__(self, key):
+        super().__init__(api_key=key)
 
     async def get_ai_answer(self, prompt:str) -> str:
-        try:
-            answer = await self.responses.create(
-                        model=MODEL,
+        answer = await self.responses.create(
+                        model=self.__MODEL,
                         input=f'''{prompt}''',
-                        max_output_tokens=MAX_OUTPUT_TOKENS)
-            
-        except PermissionDeniedError:
-            print('[ERROR] Failed to complete request to ChatGPT. Possible cause: Invalid server region.')
+                        max_output_tokens=self.__MAX_OUTPUT_TOKENS)
             
         return answer.output_text
     
-llm_client = my_request_model(api_key=KEY)
+llm_client = LLModel(key=KEY)

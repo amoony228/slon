@@ -13,7 +13,7 @@ class text_LLModel(AsyncOpenAI):
     async def get_ai_answer(self, prompt:str) -> str:
         answer = await self.responses.create(
             model=self.__MODEL, 
-            input=f'{prompt}', 
+            input=prompt, 
             max_output_tokens=self.__MAX_OUTPUT_TOKENS
             )  
         return answer.output_text
